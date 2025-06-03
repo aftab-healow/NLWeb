@@ -168,7 +168,8 @@ async def fetch_url(url: str) -> Tuple[str, Optional[str]]:
     
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url) as response:
+            # Disable SSL verification to fix SSL certificate issues
+            async with session.get(url, ssl=False) as response:
                 if response.status != 200:
                     raise ValueError(f"Failed to fetch URL {url}: HTTP {response.status}")
                 
